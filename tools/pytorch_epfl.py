@@ -1,6 +1,6 @@
 # coding: utf-8
 ###
- # @file   pytorch.py
+ # @file   pytorch_epfl.py
  # @author Sébastien Rouault <sebastien.rouault@alumni.epfl.ch>
  #
  # @section LICENSE
