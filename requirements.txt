@@ -1,1 +1,15 @@
-test
+numpy
+torch
+torchvision
+pandas
+matplotlib
+tqdm
+# PIL
+six
+pytz
+# dateutil
+pyparsing
+cycler
+kiwisolver
+cffi
+requests
