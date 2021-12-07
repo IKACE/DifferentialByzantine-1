@@ -58,7 +58,7 @@ def process_commandline():
     help="Path of the plot directory, containing the graphs traced from the experiments")
   parser.add_argument("--devices",
     type=str,
-    default="auto",
+    default="cpu",
     help="Comma-separated list of devices on which to run the experiments, used in a round-robin fashion")
   parser.add_argument("--supercharge",
     type=int,
@@ -113,7 +113,7 @@ if not args.only_plot:
 
 # Command maker helper
 def make_command(params):
-  cmd = ["python3", "-OO", "train.py"]
+  cmd = ["python3",  "train.py"]
   cmd += tools.dict_to_cmdlist(params)
   return tools.Command(cmd)
 
@@ -141,10 +141,10 @@ params_common = {
 if not args.only_plot:
   for ds, dsa in (("svm-phishing", None),):
     for md, mda in (("simples-logit", "din:68"),):
-      for gar, attacks in (("average", (("nan", None),)), ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))):
+      for gar, attacks in (("average", (("nan", None),)),): #("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))
         for attack, attargs in attacks:
-          for epsilon in (None, 0.1, 0.2, 0.5):
-            for batch_size in (10, 25, 50, 100, 250, 500):
+          for epsilon in (None, ): #0.1, 0.2, 0.5
+            for batch_size in (10, ): #25, 50, 100, 250, 500
               name = f"{ds}-{md}-{gar}-{attack}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}"
               # Submit experiment
               params = params_common.copy()
@@ -220,12 +220,12 @@ with tools.Context("plot", "info"):
   # Plot all the experiments
   for ds, dsa in (("svm-phishing", None),):
     for md, mda in (("simples-logit", "din:68"),):
-      for epsilon in (None, 0.1, 0.2, 0.5):
-        for batch_size in (10, 25, 50, 100, 250, 500):
+      for epsilon in (None, ): #0.1, 0.2, 0.5
+        for batch_size in (10,): # 25, 50, 100, 250, 500
           legend = list()
           results = list()
           # Pre-process results for all available combinations of GAR and attack
-          for gar, attacks in (("average", (("nan", None),)), ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))):
+          for gar, attacks in (("average", (("nan", None),)),): # ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))
             for attack, _ in attacks:
               name = f"{ds}-{md}-{gar}-{attack}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}"
               key = f"{gar_to_legend.get(gar, gar.capitalize())} ({'no attack' if gar == 'average' else attack})"

@@ -55,8 +55,9 @@ def get_phishing(root, url):
     return raw_phishing
   # Make dataset path
   dataset_file = root / const_filename
+
   # Fast path: pre-processed dataset already locally available
-  if dataset_file.exists():
+  if True: #dataset_file.exists()
     with dataset_file.open("rb") as fd:
       # Load, lazy-store and return dataset
       dataset = torch.load(fd)

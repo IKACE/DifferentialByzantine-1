@@ -1,1 +1,20 @@
-test
+numpy
+torch
+torchvision
+pandas
+matplotlib
+tqdm
+# PIL
+six
+pytz
+# dateutil
+pyparsing
+cycler
+kiwisolver
+cffi
+requests
+
+# OO
+# 
+# non conda// https://pygobject.readthedocs.io/en/latest/getting_started.html#macosx-getting-started
+

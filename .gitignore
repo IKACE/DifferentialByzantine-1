@@ -1,6 +1,6 @@
 # Ignore every file
-*
-!*/
+591v/
+591v/*
 
 # Excepted
 !.gitignore

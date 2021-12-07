@@ -61,7 +61,7 @@ def process_commandline():
     help="Fixed seed to use for reproducibility purpose, negative for random seed")
   parser.add_argument("--device",
     type=str,
-    default="auto",
+    default="cpu",
     help="Device on which to run the experiment, \"auto\" by default")
   parser.add_argument("--device-gar",
     type=str,
