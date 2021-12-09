@@ -167,7 +167,7 @@ if not args.only_plot:
 for gar, attacks in (("average", (("nan", None),)), ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))): #
   for attack, attargs in attacks:
     for epsilon in (None, 0.2): #0.1, 0.2, 0.5
-      for batch_size in (10, ): #25, 50, 100, 250, 500
+      for batch_size in (50, ): #25, 50, 100, 250, 500
         ds = "mnist"
         mda = None
         dsa = None
@@ -284,7 +284,7 @@ with tools.Context("plot", "info"):
   md = "simples-conv"
   mda = None
   for epsilon in (None, 0.2):  # 0.1, 0.2, 0.5
-    for batch_size in (10,):  # 25, 50, 100, 250, 500
+    for batch_size in (50,):  # 25, 50, 100, 250, 500
       legend = list()
       results = list()
       # Pre-process results for all available combinations of GAR and attack
