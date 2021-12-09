@@ -191,11 +191,11 @@ def process_commandline():
     help="Add L2 regularization of the given factor to the loss")
   parser.add_argument("--result-directory",
     type=str,
-    default=None,
+    default='results-data',
     help="Path of the directory in which to save the experiment results (loss, cross-accuracy, ...) and checkpoints, empty for no saving")
   parser.add_argument("--evaluation-delta",
     type=int,
-    default=100,
+    default=10,
     help="How many training steps between model evaluations, 0 for no evaluation")
   parser.add_argument("--user-input-delta",
     type=int,

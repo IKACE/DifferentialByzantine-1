@@ -132,7 +132,7 @@ params_common = {
   "nb-workers": 11,
   "nb-decl-byz": 5,
   "nb-real-byz": 5,
-  "batch-size-test": 59,
+  "batch-size-test": 10,
   "test-repeat": 45,
   "gradient-clip": 0.01,
   "privacy-delta": 1e-6 }
@@ -141,9 +141,9 @@ params_common = {
 if not args.only_plot:
   for ds, dsa in (("svm-phishing", None),):
     for md, mda in (("simples-logit", "din:68"),):
-      for gar, attacks in (("average", (("nan", None),)),): #("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))
+      for gar, attacks in (("average", (("nan", None),)),("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))): #
         for attack, attargs in attacks:
-          for epsilon in (None, ): #0.1, 0.2, 0.5
+          for epsilon in (None, 0.2): #0.1, 0.2, 0.5
             for batch_size in (10, ): #25, 50, 100, 250, 500
               name = f"{ds}-{md}-{gar}-{attack}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}"
               # Submit experiment
@@ -162,6 +162,40 @@ if not args.only_plot:
               params["privacy-epsilon"] = epsilon
               params["batch-size"] = batch_size
               jobs.submit(name, make_command(params))
+
+# added
+for gar, attacks in (("average", (("nan", None),)), ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))): #
+  for attack, attargs in attacks:
+    for epsilon in (None, 0.2): #0.1, 0.2, 0.5
+      for batch_size in (10, ): #25, 50, 100, 250, 500
+        ds = "mnist"
+        mda = None
+        dsa = None
+        md = 'simples-conv'
+        name = f"{ds}-{md}-{gar}-{attack}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}"
+        # Submit experiment
+        params = params_common.copy()
+        if gar == "average":
+          # Disable attack for 'average' GAR
+          params["nb-real-byz"] = 0
+        epsilon = 0.2
+        params["gradient-clip"] = 5
+        params["learning-rate"] = 0.01
+        params["momentum"] = 0.9
+        params["loss"] = "nll"
+        params["dataset"] = ds
+        params["dataset-args"] = dsa
+        params["model"] = md
+        params["model-args"] = mda
+        params["gar"] = gar
+        params["attack"] = attack
+        params["attack-args"] = attargs
+        params["privacy"] = epsilon is not None
+        params["privacy-epsilon"] = epsilon
+        params["batch-size"] = batch_size
+        params["batch-size-test"] = 10
+        params['criterion'] = 'top-k'
+        jobs.submit(name, make_command(params))
 
 # Wait for the jobs to finish and close the pool
 jobs.wait(exit_is_requested)
@@ -220,12 +254,12 @@ with tools.Context("plot", "info"):
   # Plot all the experiments
   for ds, dsa in (("svm-phishing", None),):
     for md, mda in (("simples-logit", "din:68"),):
-      for epsilon in (None, ): #0.1, 0.2, 0.5
+      for epsilon in (None, 0.2): #0.1, 0.2, 0.5
         for batch_size in (10,): # 25, 50, 100, 250, 500
           legend = list()
           results = list()
           # Pre-process results for all available combinations of GAR and attack
-          for gar, attacks in (("average", (("nan", None),)),): # ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))
+          for gar, attacks in (("average", (("nan", None),)), ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))): #
             for attack, _ in attacks:
               name = f"{ds}-{md}-{gar}-{attack}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}"
               key = f"{gar_to_legend.get(gar, gar.capitalize())} ({'no attack' if gar == 'average' else attack})"
@@ -243,3 +277,33 @@ with tools.Context("plot", "info"):
             plot.include(avgloss, "Average loss", errs="-err", lalp=0.8)
           plot.finalize(None, "Step number", "Average loss", xmin=0, xmax=1000, ymin=0, ymax=.6, legend=legend)
           plot.save(args.plot_directory / f"{ds}-{md}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}-loss.png", xsize=3, ysize=1.5)
+
+# added
+  ds = "mnist"
+  dsa = None
+  md = "simples-conv"
+  mda = None
+  for epsilon in (None, 0.2):  # 0.1, 0.2, 0.5
+    for batch_size in (10,):  # 25, 50, 100, 250, 500
+      legend = list()
+      results = list()
+      # Pre-process results for all available combinations of GAR and attack
+      for gar, attacks in (("average", (("nan", None),)), ("brute", (("little", ("factor:1.5", "negative:True")), ("empire", "factor:1.1")))):  #
+        for attack, _ in attacks:
+          name = f"{ds}-{md}-{gar}-{attack}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}"
+          key = f"{gar_to_legend.get(gar, gar.capitalize())} ({'no attack' if gar == 'average' else attack})"
+          legend.append(key)
+          results.append(compute_avg_err(name, "Accuracy", "Average loss"))
+      # Plot top-1 cross-accuracy
+      plot = histogram.LinePlot()
+      for crossacc, _ in results:
+        plot.include(crossacc, "Accuracy", errs="-err", lalp=0.8)
+      plot.finalize(None, "Step number", "Cross-accuracy", xmin=0, xmax=1000, ymin=0, ymax=1, legend=legend)
+      plot.save(args.plot_directory / f"{ds}-{md}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}.png",
+                xsize=3, ysize=1.5)
+      # Plot average loss
+      plot = histogram.LinePlot()
+      for _, avgloss in results:
+        plot.include(avgloss, "Average loss", errs="-err", lalp=0.8)
+      plot.finalize(None, "Step number", "Average loss", xmin=0, xmax=1000, ymin=0, ymax=.6, legend=legend)
+      plot.save(args.plot_directory / f"{ds}-{md}-e_{'inf' if epsilon is None else epsilon}-b_{batch_size}-loss.png", xsize=3, ysize=1.5)
