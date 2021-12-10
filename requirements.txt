@@ -17,4 +17,8 @@ requests
 # OO
 # 
 # non conda// https://pygobject.readthedocs.io/en/latest/getting_started.html#macosx-getting-started
-
+# CV adversial attack
+# why batch size <-> param size
+# batch size large -> stable
+# how attack
+# how to detect Byzantine (why these rules)
