@@ -22,3 +22,6 @@ requests
 # batch size large -> stable
 # how attack
 # how to detect Byzantine (why these rules)
+# num_step * batch_size = training progress
+
+2000
