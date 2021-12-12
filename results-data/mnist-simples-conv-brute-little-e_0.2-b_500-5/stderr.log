@@ -1,0 +1,6 @@
+[training] /home/qingyichen/EECS591/DifferentialByzantine/DifferentialByzantine/591v/lib/python3.8/site-packages/torch/cuda/__init__.py:143: UserWarning: 
+[training] NVIDIA GeForce RTX 3080 Laptop GPU with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+[training] The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+[training] If you want to use the NVIDIA GeForce RTX 3080 Laptop GPU GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+[training] 
+[training]   warnings.warn(incompatible_device_warn.format(device_name, capability, " ".join(arch_list), device_name))

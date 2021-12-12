@@ -1,0 +1,96 @@
+Module loading...
+Miscellaneous initializations...
+Command-line processing...
+[cmdline] Configuration
+[cmdline] · Reproducibility      - enforced (seed 1)
+[cmdline] · #workers             - 11
+[cmdline] · #declared Byz.       - 5
+[cmdline] · #actually Byz.       - 5
+[cmdline] · Model               
+[cmdline]   · Name      - simples-conv
+[cmdline]   · Arguments - <none>
+[cmdline] · Dataset             
+[cmdline]   · Name       - mnist
+[cmdline]   · Arguments  - <none>
+[cmdline]   · Batch size
+[cmdline]     · Training - 500
+[cmdline]     · Testing  - 10 × 45
+[cmdline]   · Transforms - default
+[cmdline] · Loss                
+[cmdline]   · Name           - nll
+[cmdline]   · Arguments      - <none>
+[cmdline]   · Regularization
+[cmdline]     · l1 - none
+[cmdline]     · l2 - none
+[cmdline] · Criterion           
+[cmdline]   · Name      - top-k
+[cmdline]   · Arguments - <none>
+[cmdline] · Optimizer           
+[cmdline]   · Name          - sgd
+[cmdline]   · Learning rate
+[cmdline]     · Initial      - 0.01
+[cmdline]     · Half-decay   - 5000
+[cmdline]     · Update delta - 5000
+[cmdline]   · Momentum      - 0.9
+[cmdline]   · Dampening     - 0.0
+[cmdline]   · Weight decay  - 0
+[cmdline] · Attack              
+[cmdline]   · Name      - little
+[cmdline]   · Arguments
+[cmdline]     · factor   - 1.5
+[cmdline]     · negative - True
+[cmdline] · Aggregation         
+[cmdline]   · Name      - brute
+[cmdline]   · Arguments - <none>
+[cmdline] · Differential privacy
+[cmdline]   · Enabled?       - yes
+[cmdline]   · ε constant     - 0.2
+[cmdline]   · δ constant     - 1e-06
+[cmdline]   · l2-sensitivity - 0.02
+Experiment setup...
+Training...
+[training] Accuracy (step 0)... 7.56%.
+[training] Training... done.
+[training] Accuracy (step 50)... 74.00%.
+[training] Training... done.
+[training] Accuracy (step 100)... 79.56%.
+[training] Training... done.
+[training] Accuracy (step 150)... 87.11%.
+[training] Training... done.
+[training] Accuracy (step 200)... 86.22%.
+[training] Training... done.
+[training] Accuracy (step 250)... 90.67%.
+[training] Training... done.
+[training] Accuracy (step 300)... 88.44%.
+[training] Training... done.
+[training] Accuracy (step 350)... 86.22%.
+[training] Training... done.
+[training] Accuracy (step 400)... 90.00%.
+[training] Training... done.
+[training] Accuracy (step 450)... 89.56%.
+[training] Training... done.
+[training] Accuracy (step 500)... 89.56%.
+[training] Training... done.
+[training] Accuracy (step 550)... 93.11%.
+[training] Training... done.
+[training] Accuracy (step 600)... 94.67%.
+[training] Training... done.
+[training] Accuracy (step 650)... 93.11%.
+[training] Training... done.
+[training] Accuracy (step 700)... 90.00%.
+[training] Training... done.
+[training] Accuracy (step 750)... 95.56%.
+[training] Training... done.
+[training] Accuracy (step 800)... 94.00%.
+[training] Training... done.
+[training] Accuracy (step 850)... 93.56%.
+[training] Training... done.
+[training] Accuracy (step 900)... 90.22%.
+[training] Training... done.
+[training] Accuracy (step 950)... 95.33%.
+[training] Training... done.
+[training] Accuracy (step 1000)... 93.56%.
+[perf] Gradient computation (per worker) - 91.6 s
+[perf] Noise addition (per worker)       - 2.81 s
+[perf] Gradient aggregation              - 9.61 s
+[perf] Model evaluation                  - 2.17 s

@@ -23,5 +23,6 @@ requests
 # how attack
 # how to detect Byzantine (why these rules)
 # num_step * batch_size = training progress
-
-2000
+# num param Conv : 431080
+# why running away from VN condition wont work
+# how to specifically counter certains attacks like little/empire
