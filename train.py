@@ -400,6 +400,7 @@ def main():
       tools.fatal_unavailable(attacks.attacks, args.attack, what="attack")
     # Model
     model = experiments.Model(args.model, config, **args.model_args)
+
     # Datasets
     if args.no_transform:
       train_transforms = test_transforms = torchvision.transforms.ToTensor()
@@ -552,7 +553,20 @@ def main():
         if args.privacy:
           with atc_noise:
             for grad in grad_honests_gar:
-              grad.add_(grad_noise.sample())
+              # QC: change
+              if args.privacy_epsilon == 0.5:
+                print("======== sparsity triggered =======")
+                grad_positive = grad[grad > 0]
+                grad_negative = grad[grad < 0]
+                if len(grad_positive) > 0:
+                  grad_p = torch.quantile(grad_positive, 0.25)
+                  grad[(grad > 0) * (grad < grad_p)] = 0
+                if len(grad_negative) > 0:
+                  grad_n = torch.quantile(grad_negative, 0.75)
+                  grad[(grad < 0) * (grad > grad_n)] = 0
+              else:
+                grad.add_(grad_noise.sample())
+
         # ------------------------------------------------------------------------ #
         # Compute the Byzantine gradients
         grad_attacks = attack.checked(grad_honests=grad_honests_gar, f_decl=args.nb_decl_byz, f_real=args.nb_real_byz, model=model, defense=defense, **args.attack_args)
