@@ -1,0 +1,46 @@
+Configuration
+· Reproducibility      - enforced (seed 4)
+· #workers             - 11
+· #declared Byz.       - 5
+· #actually Byz.       - 5
+· Model               
+  · Name      - simples-conv
+  · Arguments - <none>
+· Dataset             
+  · Name       - mnist
+  · Arguments  - <none>
+  · Batch size
+    · Training - 10
+    · Testing  - 10 × 45
+  · Transforms - default
+· Loss                
+  · Name           - nll
+  · Arguments      - <none>
+  · Regularization
+    · l1 - none
+    · l2 - none
+· Criterion           
+  · Name      - top-k
+  · Arguments - <none>
+· Optimizer           
+  · Name          - sgd
+  · Learning rate
+    · Initial      - 0.01
+    · Half-decay   - 5000
+    · Update delta - 5000
+  · Momentum      - 0.9
+  · Dampening     - 0.0
+  · Weight decay  - 0
+· Attack              
+  · Name      - little
+  · Arguments
+    · factor   - 1.5
+    · negative - True
+· Aggregation         
+  · Name      - brute
+  · Arguments - <none>
+· Differential privacy
+  · Enabled?       - no
+  · ε constant     - n/a
+  · δ constant     - n/a
+  · l2-sensitivity - n/a

@@ -1,0 +1,47 @@
+Configuration
+· Reproducibility      - enforced (seed 1)
+· #workers             - 11
+· #declared Byz.       - 5
+· #actually Byz.       - 5
+· Model               
+  · Name      - simples-logit
+  · Arguments
+    · din - 68
+· Dataset             
+  · Name       - svm-phishing
+  · Arguments  - <none>
+  · Batch size
+    · Training - 50
+    · Testing  - 10 × 45
+  · Transforms - default
+· Loss                
+  · Name           - mse
+  · Arguments      - <none>
+  · Regularization
+    · l1 - none
+    · l2 - none
+· Criterion           
+  · Name      - sigmoid
+  · Arguments - <none>
+· Optimizer           
+  · Name          - sgd
+  · Learning rate
+    · Initial      - 2.0
+    · Half-decay   - 5000
+    · Update delta - 5000
+  · Momentum      - 0.99
+  · Dampening     - 0.0
+  · Weight decay  - 0
+· Attack              
+  · Name      - little
+  · Arguments
+    · factor   - 1.5
+    · negative - True
+· Aggregation         
+  · Name      - brute
+  · Arguments - <none>
+· Differential privacy
+  · Enabled?       - yes
+  · ε constant     - 0.5
+  · δ constant     - 1e-06
+  · l2-sensitivity - 0.0004

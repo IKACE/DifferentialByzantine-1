@@ -1,0 +1,18 @@
+{
+	"grad": [
+		0.22347021102905273,
+		"Gradient computation (per worker)"
+	],
+	"noise": [
+		0.022971976887096058,
+		"Noise addition (per worker)"
+	],
+	"aggr": [
+		0.04784250259399414,
+		"Gradient aggregation"
+	],
+	"eval": [
+		0.07988882064819336,
+		"Model evaluation"
+	]
+}
